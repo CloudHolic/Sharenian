@@ -94,7 +94,7 @@
 
             <ListView.View>
                 <GridView ColumnHeaderContainerStyle="{StaticResource FlatGridViewTextHeaderStyle}" AllowsColumnReorder="False">
-                    <GridViewColumn Width="100" c:GridColumn.MinWidth="100" c:GridColumn.MaxWidth="150">
+                    <GridViewColumn Width="100" c:GridColumn.MinWidth="50" c:GridColumn.MaxWidth="200">
                         <GridViewColumn.Header>
                             <GridViewColumnHeader Tag="순위"/>
                         </GridViewColumn.Header>
@@ -109,7 +109,7 @@
                         </GridViewColumn.CellTemplate>
                     </GridViewColumn>
 
-                    <GridViewColumn Width="200" c:GridColumn.MinWidth="200" c:GridColumn.MaxWidth="400">
+                    <GridViewColumn Width="300" c:GridColumn.MinWidth="100" c:GridColumn.MaxWidth="600">
                         <GridViewColumn.Header>
                             <GridViewColumnHeader Tag="길드명"/>
                         </GridViewColumn.Header>
@@ -124,7 +124,7 @@
                         </GridViewColumn.CellTemplate>
                     </GridViewColumn>
 
-                    <GridViewColumn Width="100" c:GridColumn.MinWidth="100" c:GridColumn.MaxWidth="150">
+                    <GridViewColumn Width="100" c:GridColumn.MinWidth="50" c:GridColumn.MaxWidth="200">
                         <GridViewColumn.Header>
                             <GridViewColumnHeader Tag="길드 레벨"/>
                         </GridViewColumn.Header>
@@ -139,7 +139,7 @@
                         </GridViewColumn.CellTemplate>
                     </GridViewColumn>
 
-                    <GridViewColumn Width="200" c:GridColumn.MinWidth="200" c:GridColumn.MaxWidth="400">
+                    <GridViewColumn Width="300" c:GridColumn.MinWidth="100" c:GridColumn.MaxWidth="600">
                         <GridViewColumn.Header>
                             <GridViewColumnHeader Tag="길드 마스터"/>
                         </GridViewColumn.Header>
@@ -154,7 +154,7 @@
                         </GridViewColumn.CellTemplate>
                     </GridViewColumn>
 
-                    <GridViewColumn Width="150" c:GridColumn.MinWidth="150" c:GridColumn.MaxWidth="300">
+                    <GridViewColumn Width="200" c:GridColumn.MinWidth="50" c:GridColumn.MaxWidth="300">
                         <GridViewColumn.Header>
                             <GridViewColumnHeader Tag="점수"/>
                         </GridViewColumn.Header>
