@@ -7,7 +7,7 @@
         xmlns:vm="clr-namespace:Sharenian.ViewModels"
         Style="{StaticResource CustomWindowStyle}" Background="White"
         TextOptions.TextFormattingMode="Ideal" TextOptions.TextRenderingMode="ClearType"
-        SizeToContent="Manual" Title="Guild Manager" Height="800" Width="1000"
+        SizeToContent="Manual" Title="Guild Manager" Height="800" Width="700"
         Icon="pack://application:,,,/Assets/Images/MainIcon.ico"
         WindowStartupLocation="CenterScreen">
     <c:CustomWindow.DataContext>
@@ -94,7 +94,7 @@
 
             <ListView.View>
                 <GridView ColumnHeaderContainerStyle="{StaticResource FlatGridViewTextHeaderStyle}" AllowsColumnReorder="False">
-                    <GridViewColumn Width="100" c:GridColumn.MinWidth="50" c:GridColumn.MaxWidth="200">
+                    <GridViewColumn Width="50">
                         <GridViewColumn.Header>
                             <GridViewColumnHeader Tag="순위"/>
                         </GridViewColumn.Header>
@@ -102,14 +102,14 @@
                         <GridViewColumn.CellTemplate>
                             <DataTemplate DataType="m:Guild">
                                 <Grid Height="30">
-                                    <TextBlock HorizontalAlignment="Left" VerticalAlignment="Center" Margin="10,0,0,0"
+                                    <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center"
                                                Text="{Binding Order}" FontSize="15" Foreground="#404D61"/>
                                 </Grid>
                             </DataTemplate>
                         </GridViewColumn.CellTemplate>
                     </GridViewColumn>
 
-                    <GridViewColumn Width="300" c:GridColumn.MinWidth="100" c:GridColumn.MaxWidth="600">
+                    <GridViewColumn Width="150">
                         <GridViewColumn.Header>
                             <GridViewColumnHeader Tag="길드명"/>
                         </GridViewColumn.Header>
@@ -117,14 +117,14 @@
                         <GridViewColumn.CellTemplate>
                             <DataTemplate DataType="m:Guild">
                                 <Grid Height="30">
-                                    <TextBlock HorizontalAlignment="Left" VerticalAlignment="Center" Margin="10,0,0,0"
+                                    <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center"
                                                Text="{Binding Name}" FontSize="15" Foreground="#404D61"/>
                                 </Grid>
                             </DataTemplate>
                         </GridViewColumn.CellTemplate>
                     </GridViewColumn>
 
-                    <GridViewColumn Width="100" c:GridColumn.MinWidth="50" c:GridColumn.MaxWidth="200">
+                    <GridViewColumn Width="100">
                         <GridViewColumn.Header>
                             <GridViewColumnHeader Tag="길드 레벨"/>
                         </GridViewColumn.Header>
@@ -132,14 +132,14 @@
                         <GridViewColumn.CellTemplate>
                             <DataTemplate DataType="m:Guild">
                                 <Grid Height="30">
-                                    <TextBlock HorizontalAlignment="Left" VerticalAlignment="Center" Margin="10,0,0,0"
+                                    <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" Margin="10,0,0,0"
                                                Text="{Binding Level}" FontSize="15" Foreground="#404D61"/>
                                 </Grid>
                             </DataTemplate>
                         </GridViewColumn.CellTemplate>
                     </GridViewColumn>
 
-                    <GridViewColumn Width="300" c:GridColumn.MinWidth="100" c:GridColumn.MaxWidth="600">
+                    <GridViewColumn Width="200">
                         <GridViewColumn.Header>
                             <GridViewColumnHeader Tag="길드 마스터"/>
                         </GridViewColumn.Header>
@@ -147,21 +147,21 @@
                         <GridViewColumn.CellTemplate>
                             <DataTemplate DataType="m:Guild">
                                 <Grid Height="30">
-                                    <TextBlock HorizontalAlignment="Left" VerticalAlignment="Center" Margin="10,0,0,0"
+                                    <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center"
                                                Text="{Binding Master}" FontSize="15" Foreground="#404D61"/>
                                 </Grid>
                             </DataTemplate>
                         </GridViewColumn.CellTemplate>
                     </GridViewColumn>
 
-                    <GridViewColumn Width="200" c:GridColumn.MinWidth="50" c:GridColumn.MaxWidth="300">
+                    <GridViewColumn Width="150">
                         <GridViewColumn.Header>
                             <GridViewColumnHeader Tag="점수"/>
                         </GridViewColumn.Header>
                         <GridViewColumn.CellTemplate>
                             <DataTemplate DataType="m:Guild">
                                 <Grid Height="30">
-                                    <TextBlock HorizontalAlignment="Left" VerticalAlignment="Center" Margin="10,0,0,0"
+                                    <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center"
                                                Text="{Binding Score}" FontSize="15" Foreground="#404D61"/>
                                 </Grid>
                             </DataTemplate>

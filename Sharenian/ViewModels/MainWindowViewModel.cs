@@ -1,6 +1,8 @@
-﻿using CommunityToolkit.Mvvm.ComponentModel;
+﻿using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Threading.Tasks;
+using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using Sharenian.Models;
 
@@ -36,12 +38,35 @@ public partial class MainWindowViewModel : ObservableRecipient
 
     #endregion
 
+    public MainWindowViewModel() => GuildList = new ObservableCollection<Guild>();
+
     #region Commands
 
     [RelayCommand(AllowConcurrentExecutions = false)]
     private async Task Load()
     {
+        var progressHandler = new Progress<int>(value => Progress = value);
 
+        var progress = progressHandler as IProgress<int>;
+
+        var guilds = await Task.Run(async () =>
+        {
+            var crawler = new SharenianCrawler(7);
+            var result = new List<Guild>();
+            for (var page = 1; ; page++)
+            {
+                var pagedGuild = await crawler.GetGuilds(page);
+                if (pagedGuild.Count == 0)
+                    break;
+
+                result.AddRange(pagedGuild);
+                progress.Report(100 * page / 150);
+            }
+
+            return result;
+        });
+
+        guilds.ForEach(GuildList.Add);
     }
 
     #endregion
