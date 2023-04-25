@@ -66,7 +66,11 @@ public partial class MainWindowViewModel : ObservableRecipient
             return result;
         });
 
-        guilds.ForEach(GuildList.Add);
+        guilds.ForEach(x =>
+        {
+            x.SetPoint(guilds.Count);
+            GuildList.Add(x);
+        });
     }
 
     #endregion

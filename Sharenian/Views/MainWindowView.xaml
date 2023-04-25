@@ -21,8 +21,8 @@
             <RowDefinition Height="20"/>
         </Grid.RowDefinitions>
 
-        <StackPanel Grid.Row="0" HorizontalAlignment="Right" VerticalAlignment="Center">
-            <c:FlatButton x:Name="LoadButton" Margin="0,10,30,10" Padding="5" Width="80" HorizontalAlignment="Right" HorizontalContentAlignment="Stretch"
+        <DockPanel Grid.Row="0" VerticalAlignment="Center">
+            <c:FlatButton x:Name="LoadButton" DockPanel.Dock="Right" Margin="0,15,30,5" Padding="5" Width="80" HorizontalAlignment="Right" HorizontalContentAlignment="Stretch"
                           Background="White" MouseOverBackground="#DDDDDD" PressedBackground="#DDDDDD" Command="{Binding LoadCommand}">
                 <Grid HorizontalAlignment="Stretch">
                     <Grid.ColumnDefinitions>
@@ -36,7 +36,7 @@
                     <TextBlock Grid.Column="1" Text="Load" VerticalAlignment="Center" Margin="5,0,0,0" FontSize="15"/>
                 </Grid>
             </c:FlatButton>
-        </StackPanel>
+        </DockPanel>
 
         <ListView Grid.Row="1" Margin="5" BorderThickness="0" ItemsSource="{Binding GuildList}">
             <ListView.Resources>
@@ -138,7 +138,7 @@
                         </GridViewColumn.CellTemplate>
                     </GridViewColumn>
 
-                    <GridViewColumn Width="200">
+                    <GridViewColumn Width="165">
                         <GridViewColumn.Header>
                             <GridViewColumnHeader Tag="길드 마스터"/>
                         </GridViewColumn.Header>
@@ -153,7 +153,7 @@
                         </GridViewColumn.CellTemplate>
                     </GridViewColumn>
 
-                    <GridViewColumn Width="150">
+                    <GridViewColumn Width="115">
                         <GridViewColumn.Header>
                             <GridViewColumnHeader Tag="점수"/>
                         </GridViewColumn.Header>
@@ -162,6 +162,20 @@
                                 <Grid Height="30">
                                     <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center"
                                                Text="{Binding Score}" FontSize="15" Foreground="#404D61"/>
+                                </Grid>
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+
+                    <GridViewColumn Width="100">
+                        <GridViewColumn.Header>
+                            <GridViewColumnHeader Tag="노블포인트"/>
+                        </GridViewColumn.Header>
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate DataType="m:Guild">
+                                <Grid Height="30">
+                                    <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center"
+                                               Text="{Binding Point}" FontSize="15" Foreground="Red"/>
                                 </Grid>
                             </DataTemplate>
                         </GridViewColumn.CellTemplate>
