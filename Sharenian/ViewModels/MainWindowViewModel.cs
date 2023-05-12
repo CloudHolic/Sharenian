@@ -1,9 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Diagnostics;
+using System.IO;
+using System.Linq;
 using System.Threading.Tasks;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using JetBrains.Annotations;
+using Microsoft.Win32;
 using Sharenian.Models;
 
 namespace Sharenian.ViewModels;
@@ -43,11 +48,12 @@ public partial class MainWindowViewModel : ObservableRecipient
     #region Commands
 
     [RelayCommand(AllowConcurrentExecutions = false)]
+    [UsedImplicitly]
     private async Task Load()
     {
         var progressHandler = new Progress<int>(value => Progress = value);
-
         var progress = progressHandler as IProgress<int>;
+        Progress = 0;
 
         var guilds = await Task.Run(async () =>
         {
@@ -71,6 +77,29 @@ public partial class MainWindowViewModel : ObservableRecipient
             x.SetPoint(guilds.Count);
             GuildList.Add(x);
         });
+    }
+
+    [RelayCommand(AllowConcurrentExecutions = false)]
+    [UsedImplicitly]
+    private async Task Export()
+    {
+        var saveFileDialog = new SaveFileDialog
+        {
+            InitialDirectory = Directory.GetCurrentDirectory(),
+            Title = "저장 위치",
+            DefaultExt = "xlsx",
+            Filter = "xlsx files(*.xlsx)|*.xlsx"
+        };
+
+        if (!(saveFileDialog.ShowDialog() ?? false))
+            return;
+
+        var progressHandler = new Progress<int>(value => Progress = value);
+        var manager = new ExcelManager(saveFileDialog.FileName);
+
+        await manager.WriteExcel(GuildList.ToList(), progressHandler);
+
+        _ = Process.Start("explorer.exe", $"/select, {saveFileDialog.FileName}");
     }
 
     #endregion

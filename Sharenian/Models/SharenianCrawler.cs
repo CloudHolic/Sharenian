@@ -29,22 +29,19 @@ public class SharenianCrawler
 
         var list = new List<Guild>();
         var startIdx = rawData.Find(x => x.Str.Equals("점수"))?.Idx;
-        var endIdx = rawData.Find(x => x.Str.Equals("Family Site"))?.Idx;
+        var endIdx = rawData.Find(x => x.Str.Equals("Family Site"))?.Idx - 10;
 
         if (startIdx != null && endIdx != null)
         {
             rawData = rawData.Skip(startIdx.Value + 1).Take(endIdx.Value - startIdx.Value - 1).ToList();
 
-            for (var (i, order) = (0, 1); i < rawData.Count; i++)
+            for (var (i, order) = (page == 1 ? 1 : 2, 10 * (page - 1) + 1); i < rawData.Count; )
             {
-                if (rawData[i].Str.Equals("-") || ParseNumber(rawData[i].Str) != null)
-                    continue;
-
                 var (name, master) = (rawData[i].Str, rawData[i + 2].Str);
                 var (level, score) = (ParseNumber(rawData[i + 1].Str) ?? 0, ParseNumber(rawData[i + 3].Str) ?? 0);
 
-                list.Add(new Guild(10 * (page - 1) + order++, name, level, master, score));
-                i += 3;
+                list.Add(new Guild(order++, name, level, master, score));
+                i += order < 4 ? 5 : 6;
             }
         }
 
