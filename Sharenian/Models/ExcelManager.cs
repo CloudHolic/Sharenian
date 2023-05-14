@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Threading.Tasks;
 using OfficeOpenXml;
+using OfficeOpenXml.Style;
 
 namespace Sharenian.Models;
 
@@ -40,8 +42,15 @@ public class ExcelManager
                 worksheet.Cells[x.Order + 1, 5].Value = x.Score;
                 worksheet.Cells[x.Order + 1, 6].Value = x.Point;
 
+                worksheet.Cells[x.Order + 1, 5].Style.Numberformat.Format = "#,##";
+
                 progress.Report(100 * x.Order / count);
             }));
+        
+        worksheet.Cells.AutoFitColumns();
+        worksheet.Column(5).Width = 15;
+        worksheet.Cells.Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
+        worksheet.Cells[2, 6, count + 1, 6].Style.Font.Color.SetColor(Color.Red);
 
         await package.SaveAsAsync(FilePath);
     }
