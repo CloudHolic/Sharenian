@@ -19,7 +19,7 @@ public partial class SharenianViewModel : ObservableRecipient
 
     #region public ObservableCollection<Guild> GuildList
 
-    private ObservableCollection<Guild> _guildList = null!;
+    private ObservableCollection<Guild> _guildList = new();
 
     public ObservableCollection<Guild> GuildList
     {
@@ -54,9 +54,7 @@ public partial class SharenianViewModel : ObservableRecipient
     #endregion
 
     #endregion
-
-    public SharenianViewModel() => GuildList = new ObservableCollection<Guild>();
-
+    
     #region Commands
 
     [RelayCommand(AllowConcurrentExecutions = false)]
@@ -110,7 +108,7 @@ public partial class SharenianViewModel : ObservableRecipient
         var progressHandler = new Progress<int>(value => Progress = value);
         var manager = new ExcelManager(saveFileDialog.FileName);
 
-        await manager.WriteExcel(GuildList.ToList(), progressHandler);
+        await manager.WriteGuildToExcel(GuildList.ToList(), progressHandler);
 
         _ = Process.Start("explorer.exe", $"/select, {saveFileDialog.FileName}");
     }

@@ -24,8 +24,7 @@
                       Margin="5,15,0,5" FontSize="15" BorderThickness="1" BorderBrush="Black"
                       ItemsSource="{Binding Server, Converter={cv:EnumToCollectionConverter}, ConverterParameter='Single', Mode=OneTime}"
                       SelectedValue="{Binding Server, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                      DisplayMemberPath="Description" SelectedValuePath="Value">
-            </ComboBox>
+                      DisplayMemberPath="Description" SelectedValuePath="Value"/>
 
             <c:FlatButton x:Name="LoadButton" DockPanel.Dock="Right" Margin="0,15,30,5" Padding="5" Width="80" HorizontalAlignment="Right" HorizontalContentAlignment="Stretch"
                           Background="White" MouseOverBackground="#DDDDDD" PressedBackground="#DDDDDD" Command="{Binding LoadCommand}">

@@ -20,8 +20,16 @@
         </Grid.RowDefinitions>
 
         <DockPanel Grid.Row="0" VerticalAlignment="Center">
+            <ComboBox DockPanel.Dock="Left" VerticalAlignment="Stretch" Style="{StaticResource FlatComboBoxStyle}"
+                      Margin="5,15,0,5" FontSize="15" BorderThickness="1" BorderBrush="Black"
+                      ItemsSource="{Binding Server, Converter={cv:EnumToCollectionConverter}, ConverterParameter='Single', Mode=OneTime}"
+                      SelectedValue="{Binding Server, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                      DisplayMemberPath="Description" SelectedValuePath="Value"/>
+
+            <TextBox Margin="15,15,0,5" Width="150" Text="{Binding Guild, Mode=TwoWay}"/>
+
             <c:FlatButton x:Name="LoadButton" DockPanel.Dock="Right" Margin="0,15,30,5" Padding="5" Width="80" HorizontalAlignment="Right" HorizontalContentAlignment="Stretch"
-                      Background="White" MouseOverBackground="#DDDDDD" PressedBackground="#DDDDDD" Command="{Binding LoadCommand}">
+                          Background="White" MouseOverBackground="#DDDDDD" PressedBackground="#DDDDDD" Command="{Binding LoadCommand}">
                 <Grid HorizontalAlignment="Stretch">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="2*"/>
@@ -51,7 +59,7 @@
             </c:FlatButton>
         </DockPanel>
 
-        <ListView Grid.Row="1" Margin="5" BorderThickness="0" ItemsSource="{Binding GuildList}">
+        <ListView Grid.Row="1" Margin="5" BorderThickness="0" ItemsSource="{Binding UserList}">
             <ListView.Resources>
                 <ControlTemplate x:Key="NormalTemplate" TargetType="ListViewItem">
                     <Border CornerRadius="5" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Background="Transparent"
@@ -106,31 +114,31 @@
 
             <ListView.View>
                 <GridView ColumnHeaderContainerStyle="{StaticResource FlatGridViewTextHeaderStyle}" AllowsColumnReorder="False">
-                    <GridViewColumn Width="50">
+                    <GridViewColumn Width="160">
                         <GridViewColumn.Header>
-                            <GridViewColumnHeader Tag="순위"/>
+                            <GridViewColumnHeader Tag="닉네임"/>
                         </GridViewColumn.Header>
 
                         <GridViewColumn.CellTemplate>
-                            <DataTemplate DataType="m:Guild">
+                            <DataTemplate DataType="m:User">
                                 <Grid Height="30">
                                     <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center"
-                                           Text="{Binding Order}" FontSize="15" Foreground="#404D61"/>
+                                           Text="{Binding NickName}" FontSize="15" Foreground="#404D61"/>
                                 </Grid>
                             </DataTemplate>
                         </GridViewColumn.CellTemplate>
                     </GridViewColumn>
 
-                    <GridViewColumn Width="150">
+                    <GridViewColumn Width="160">
                         <GridViewColumn.Header>
-                            <GridViewColumnHeader Tag="길드명"/>
+                            <GridViewColumnHeader Tag="직업"/>
                         </GridViewColumn.Header>
 
                         <GridViewColumn.CellTemplate>
-                            <DataTemplate DataType="m:Guild">
+                            <DataTemplate DataType="m:User">
                                 <Grid Height="30">
                                     <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center"
-                                           Text="{Binding Name}" FontSize="15" Foreground="#404D61"/>
+                                           Text="{Binding Job}" FontSize="15" Foreground="#404D61"/>
                                 </Grid>
                             </DataTemplate>
                         </GridViewColumn.CellTemplate>
@@ -138,11 +146,11 @@
 
                     <GridViewColumn Width="100">
                         <GridViewColumn.Header>
-                            <GridViewColumnHeader Tag="길드 레벨"/>
+                            <GridViewColumnHeader Tag="레벨"/>
                         </GridViewColumn.Header>
 
                         <GridViewColumn.CellTemplate>
-                            <DataTemplate DataType="m:Guild">
+                            <DataTemplate DataType="m:User">
                                 <Grid Height="30">
                                     <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" Margin="10,0,0,0"
                                            Text="{Binding Level}" FontSize="15" Foreground="#404D61"/>
@@ -151,44 +159,30 @@
                         </GridViewColumn.CellTemplate>
                     </GridViewColumn>
 
-                    <GridViewColumn Width="165">
-                        <GridViewColumn.Header>
-                            <GridViewColumnHeader Tag="길드 마스터"/>
-                        </GridViewColumn.Header>
-
-                        <GridViewColumn.CellTemplate>
-                            <DataTemplate DataType="m:Guild">
-                                <Grid Height="30">
-                                    <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center"
-                                           Text="{Binding Master}" FontSize="15" Foreground="#404D61"/>
-                                </Grid>
-                            </DataTemplate>
-                        </GridViewColumn.CellTemplate>
-                    </GridViewColumn>
-
-                    <GridViewColumn Width="115">
-                        <GridViewColumn.Header>
-                            <GridViewColumnHeader Tag="점수"/>
-                        </GridViewColumn.Header>
-                        <GridViewColumn.CellTemplate>
-                            <DataTemplate DataType="m:Guild">
-                                <Grid Height="30">
-                                    <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center"
-                                           Text="{Binding Score}" FontSize="15" Foreground="#404D61"/>
-                                </Grid>
-                            </DataTemplate>
-                        </GridViewColumn.CellTemplate>
-                    </GridViewColumn>
-
                     <GridViewColumn Width="100">
                         <GridViewColumn.Header>
-                            <GridViewColumnHeader Tag="노블포인트"/>
+                            <GridViewColumnHeader Tag="무릉"/>
                         </GridViewColumn.Header>
+
                         <GridViewColumn.CellTemplate>
-                            <DataTemplate DataType="m:Guild">
+                            <DataTemplate DataType="m:User">
                                 <Grid Height="30">
                                     <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center"
-                                           Text="{Binding Point}" FontSize="15" Foreground="Red"/>
+                                           Text="{Binding Murung}" FontSize="15" Foreground="#404D61"/>
+                                </Grid>
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+
+                    <GridViewColumn Width="160">
+                        <GridViewColumn.Header>
+                            <GridViewColumnHeader Tag="마지막 활동일"/>
+                        </GridViewColumn.Header>
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate DataType="m:User">
+                                <Grid Height="30">
+                                    <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center"
+                                           Text="{Binding LastActivity}" FontSize="15" Foreground="#404D61"/>
                                 </Grid>
                             </DataTemplate>
                         </GridViewColumn.CellTemplate>

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Linq;
 using System.Threading.Tasks;
 using OfficeOpenXml;
 using OfficeOpenXml.Style;
@@ -17,7 +18,7 @@ public class ExcelManager
         FilePath = filePath;
     }
 
-    public async Task WriteExcel(List<Guild> guildList, IProgress<int> progress)
+    public async Task WriteGuildToExcel(List<Guild> guildList, IProgress<int> progress)
     {
         if (string.IsNullOrEmpty(FilePath))
             return;
@@ -51,6 +52,46 @@ public class ExcelManager
         worksheet.Column(5).Width = 15;
         worksheet.Cells.Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
         worksheet.Cells[2, 6, count + 1, 6].Style.Font.Color.SetColor(Color.Red);
+
+        await package.SaveAsAsync(FilePath);
+    }
+
+    public async Task WriteUserToExcel(List<User> userList, IProgress<int> progress)
+    {
+        if (string.IsNullOrEmpty(FilePath))
+            return;
+
+        using var package = new ExcelPackage();
+
+        var worksheet = package.Workbook.Worksheets.Add("무릉");
+        worksheet.Cells[1, 1].Value = "닉네임";
+        worksheet.Cells[1, 2].Value = "직업";
+        worksheet.Cells[1, 3].Value = "레벨";
+        worksheet.Cells[1, 4].Value = "무릉";
+        worksheet.Cells[1, 5].Value = "마지막 활동일";
+
+        var count = userList.Count;
+        await Task.Run(() => userList.Select((x, i) => new
+            {
+                Item = x,
+                Index = i
+            })
+            .ToList()
+            .ForEach(x =>
+            {
+                var (user, index) = (x.Item, x.Index);
+
+                worksheet.Cells[index + 2, 1].Value = user.NickName;
+                worksheet.Cells[index + 2, 2].Value = user.Job;
+                worksheet.Cells[index + 2, 3].Value = user.Level;
+                worksheet.Cells[index + 2, 4].Value = $"{user.Murung}층";
+                worksheet.Cells[index + 2, 5].Value = user.LastActivity;
+
+                progress.Report(100 * index / count);
+            }));
+
+        worksheet.Cells.AutoFitColumns();
+        worksheet.Cells.Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
 
         await package.SaveAsAsync(FilePath);
     }
