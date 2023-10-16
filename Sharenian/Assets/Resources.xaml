@@ -4,6 +4,7 @@
         <ResourceDictionary Source="Controls/FlatButtonStyle.xaml"/>
         <ResourceDictionary Source="Controls/FlatComboBoxStyle.xaml"/>
         <ResourceDictionary Source="Controls/FlatGridViewColumnHeaderStyle.xaml"/>
+        <ResourceDictionary Source="Controls/NoBorderTabItemStyle.xaml"/>
 
         <ResourceDictionary Source="Images/ButtonImages.xaml"/>
     </ResourceDictionary.MergedDictionaries>

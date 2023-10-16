@@ -1,0 +1,215 @@
+﻿<UserControl x:Class="Sharenian.Views.SharenianView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:c="clr-namespace:Sharenian.Controls"
+             xmlns:cv="clr-namespace:Sharenian.Converters"
+             xmlns:m="clr-namespace:Sharenian.Models"
+             xmlns:vm="clr-namespace:Sharenian.ViewModels"
+             mc:Ignorable="d" d:DesignHeight="800" d:DesignWidth="700">
+    <UserControl.DataContext>
+        <vm:SharenianViewModel/>
+    </UserControl.DataContext>
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="55"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="20"/>
+        </Grid.RowDefinitions>
+
+        <DockPanel Grid.Row="0" VerticalAlignment="Center">
+            <ComboBox DockPanel.Dock="Left" VerticalAlignment="Stretch" Style="{StaticResource FlatComboBoxStyle}"
+                      Margin="5,15,0,5" FontSize="15" BorderThickness="1" BorderBrush="Black"
+                      ItemsSource="{Binding Server, Converter={cv:EnumToCollectionConverter}, ConverterParameter='Single', Mode=OneTime}"
+                      SelectedValue="{Binding Server, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                      DisplayMemberPath="Description" SelectedValuePath="Value">
+            </ComboBox>
+
+            <c:FlatButton x:Name="LoadButton" DockPanel.Dock="Right" Margin="0,15,30,5" Padding="5" Width="80" HorizontalAlignment="Right" HorizontalContentAlignment="Stretch"
+                          Background="White" MouseOverBackground="#DDDDDD" PressedBackground="#DDDDDD" Command="{Binding LoadCommand}">
+                <Grid HorizontalAlignment="Stretch">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="2*"/>
+                        <ColumnDefinition Width="3*"/>
+                    </Grid.ColumnDefinitions>
+
+                    <Image Grid.Column="0" Source="{StaticResource LeftRotateArrowImage}" Margin="5,0"
+                       Height="{Binding ActualHeight, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=Grid}}"/>
+
+                    <TextBlock Grid.Column="1" Text="Load" VerticalAlignment="Center" Margin="5,0,0,0" FontSize="15"/>
+                </Grid>
+            </c:FlatButton>
+
+            <c:FlatButton x:Name="ExportButton" Margin="0,15,30,5" Padding="5" Width="90" HorizontalAlignment="Right" HorizontalContentAlignment="Stretch"
+                          Background="White" MouseOverBackground="#DDDDDD" PressedBackground="#DDDDDD" Command="{Binding ExportCommand}">
+                <Grid HorizontalAlignment="Stretch">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="2*"/>
+                        <ColumnDefinition Width="3*"/>
+                    </Grid.ColumnDefinitions>
+
+                    <Image Grid.Column="0" Source="{StaticResource ExportImage}"
+                       Height="{Binding ActualHeight, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=Grid}}"/>
+
+                    <TextBlock Grid.Column="1" Text="Export" VerticalAlignment="Center" FontSize="15"/>
+                </Grid>
+            </c:FlatButton>
+        </DockPanel>
+
+        <ListView Grid.Row="1" Margin="5" BorderThickness="0" ItemsSource="{Binding GuildList}">
+            <ListView.Resources>
+                <ControlTemplate x:Key="NormalTemplate" TargetType="ListViewItem">
+                    <Border CornerRadius="5" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Background="Transparent"
+                        BorderThickness="0,1,0,0">
+                        <Border.BorderBrush>
+                            <SolidColorBrush Color="#666666" Opacity="0.1"/>
+                        </Border.BorderBrush>
+
+                        <GridViewRowPresenter Content="{TemplateBinding Content}"/>
+                    </Border>
+                </ControlTemplate>
+
+                <ControlTemplate x:Key="SelectedTemplate" TargetType="ListViewItem">
+                    <Border CornerRadius="5" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" BorderThickness="0,1,0,0">
+                        <Border.BorderBrush>
+                            <SolidColorBrush Color="#666666" Opacity="0.1"/>
+                        </Border.BorderBrush>
+
+                        <Border.Background>
+                            <SolidColorBrush Color="#999999" Opacity="0.1"/>
+                        </Border.Background>
+
+                        <GridViewRowPresenter Content="{TemplateBinding Content}"/>
+                    </Border>
+                </ControlTemplate>
+            </ListView.Resources>
+
+            <ListView.ItemContainerStyle>
+                <Style TargetType="ListViewItem">
+                    <Setter Property="HorizontalAlignment" Value="Stretch"/>
+                    <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+                    <Setter Property="Template" Value="{StaticResource NormalTemplate}"/>
+                    <Style.Triggers>
+                        <MultiTrigger>
+                            <MultiTrigger.Conditions>
+                                <Condition Property="IsSelected" Value="True"/>
+                                <Condition Property="Selector.IsSelectionActive" Value="True"/>
+                            </MultiTrigger.Conditions>
+                            <Setter Property="Template" Value="{StaticResource SelectedTemplate}"/>
+                        </MultiTrigger>
+
+                        <MultiTrigger>
+                            <MultiTrigger.Conditions>
+                                <Condition Property="IsMouseOver" Value="True"/>
+                                <Condition Property="Selector.IsSelectionActive" Value="True"/>
+                            </MultiTrigger.Conditions>
+                            <Setter Property="Template" Value="{StaticResource SelectedTemplate}"/>
+                        </MultiTrigger>
+                    </Style.Triggers>
+                </Style>
+            </ListView.ItemContainerStyle>
+
+            <ListView.View>
+                <GridView ColumnHeaderContainerStyle="{StaticResource FlatGridViewTextHeaderStyle}" AllowsColumnReorder="False">
+                    <GridViewColumn Width="50">
+                        <GridViewColumn.Header>
+                            <GridViewColumnHeader Tag="순위"/>
+                        </GridViewColumn.Header>
+
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate DataType="m:Guild">
+                                <Grid Height="30">
+                                    <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center"
+                                           Text="{Binding Order}" FontSize="15" Foreground="#404D61"/>
+                                </Grid>
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+
+                    <GridViewColumn Width="150">
+                        <GridViewColumn.Header>
+                            <GridViewColumnHeader Tag="길드명"/>
+                        </GridViewColumn.Header>
+
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate DataType="m:Guild">
+                                <Grid Height="30">
+                                    <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center"
+                                           Text="{Binding Name}" FontSize="15" Foreground="#404D61"/>
+                                </Grid>
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+
+                    <GridViewColumn Width="100">
+                        <GridViewColumn.Header>
+                            <GridViewColumnHeader Tag="길드 레벨"/>
+                        </GridViewColumn.Header>
+
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate DataType="m:Guild">
+                                <Grid Height="30">
+                                    <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" Margin="10,0,0,0"
+                                           Text="{Binding Level}" FontSize="15" Foreground="#404D61"/>
+                                </Grid>
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+
+                    <GridViewColumn Width="165">
+                        <GridViewColumn.Header>
+                            <GridViewColumnHeader Tag="길드 마스터"/>
+                        </GridViewColumn.Header>
+
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate DataType="m:Guild">
+                                <Grid Height="30">
+                                    <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center"
+                                           Text="{Binding Master}" FontSize="15" Foreground="#404D61"/>
+                                </Grid>
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+
+                    <GridViewColumn Width="115">
+                        <GridViewColumn.Header>
+                            <GridViewColumnHeader Tag="점수"/>
+                        </GridViewColumn.Header>
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate DataType="m:Guild">
+                                <Grid Height="30">
+                                    <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center"
+                                           Text="{Binding Score}" FontSize="15" Foreground="#404D61"/>
+                                </Grid>
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+
+                    <GridViewColumn Width="100">
+                        <GridViewColumn.Header>
+                            <GridViewColumnHeader Tag="노블포인트"/>
+                        </GridViewColumn.Header>
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate DataType="m:Guild">
+                                <Grid Height="30">
+                                    <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center"
+                                           Text="{Binding Point}" FontSize="15" Foreground="Red"/>
+                                </Grid>
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+                </GridView>
+            </ListView.View>
+        </ListView>
+
+        <Grid Grid.Row="2" Margin="5" Visibility="{Binding IsEnabled, ElementName=LoadButton, Converter={cv:BooleanToVisibilityConverter}, ConverterParameter=Inverted}">
+            <ProgressBar Value="{Binding Progress}" Maximum="100" Minimum="0"/>
+        </Grid>
+
+        <Grid Grid.Row="2" Margin="5" Visibility="{Binding IsEnabled, ElementName=ExportButton, Converter={cv:BooleanToVisibilityConverter}, ConverterParameter=Inverted}">
+            <ProgressBar Value="{Binding Progress}" Maximum="100" Minimum="0"/>
+        </Grid>
+    </Grid>
+</UserControl>

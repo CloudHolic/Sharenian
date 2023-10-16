@@ -11,13 +11,13 @@ public class SharenianCrawler
 {
     private static string BaseUrl => "https://maplestory.nexon.com";
 
-    private int ServerCode { get; }
+    private ServerCode ServerCode { get; }
 
-    public SharenianCrawler(int serverCode) => ServerCode = serverCode;
+    public SharenianCrawler(ServerCode server) => ServerCode = server;
 
     public async Task<List<Guild>> GetGuilds(int page)
     {
-        var response = $"{BaseUrl}/N23Ranking/World/Guild?w={ServerCode}&t=2&page={page}".GetAsync().Result;
+        var response = $"{BaseUrl}/N23Ranking/World/Guild?w={(int)ServerCode}&t=2&page={page}".GetAsync().Result;
         var doc = await response.ResponseMessage.Content.ReadAsStringAsync();
 
         var htmlDoc = new HtmlDocument();
