@@ -85,7 +85,7 @@ public class ExcelManager
                 worksheet.Cells[index + 2, 2].Value = user.Job;
                 worksheet.Cells[index + 2, 3].Value = user.Level;
                 worksheet.Cells[index + 2, 4].Value = $"{user.Murung}층";
-                worksheet.Cells[index + 2, 5].Value = user.LastActivity;
+                worksheet.Cells[index + 2, 5].Value = $"{user.LastActivity}일 전";
 
                 progress.Report(1000 * index / count);
             }));

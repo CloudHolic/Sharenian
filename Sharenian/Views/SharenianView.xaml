@@ -57,7 +57,8 @@
             </c:FlatButton>
         </DockPanel>
 
-        <ListView Grid.Row="1" Margin="5" BorderThickness="0" ItemsSource="{Binding GuildList}">
+        <ListView Grid.Row="1" Margin="5" BorderThickness="0" ItemsSource="{Binding GuildList}"
+                  IsSynchronizedWithCurrentItem="True" c:GridViewSort.AutoSort="True">
             <ListView.Resources>
                 <ControlTemplate x:Key="NormalTemplate" TargetType="ListViewItem">
                     <Border CornerRadius="5" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Background="Transparent"
@@ -112,7 +113,7 @@
 
             <ListView.View>
                 <GridView ColumnHeaderContainerStyle="{StaticResource FlatGridViewTextHeaderStyle}" AllowsColumnReorder="False">
-                    <GridViewColumn Width="50">
+                    <GridViewColumn Width="50" c:GridViewSort.PropertyName="Order">
                         <GridViewColumn.Header>
                             <GridViewColumnHeader Tag="순위"/>
                         </GridViewColumn.Header>
@@ -127,7 +128,7 @@
                         </GridViewColumn.CellTemplate>
                     </GridViewColumn>
 
-                    <GridViewColumn Width="150">
+                    <GridViewColumn Width="150" c:GridViewSort.PropertyName="Name">
                         <GridViewColumn.Header>
                             <GridViewColumnHeader Tag="길드명"/>
                         </GridViewColumn.Header>
@@ -142,7 +143,7 @@
                         </GridViewColumn.CellTemplate>
                     </GridViewColumn>
 
-                    <GridViewColumn Width="100">
+                    <GridViewColumn Width="100" c:GridViewSort.PropertyName="Level">
                         <GridViewColumn.Header>
                             <GridViewColumnHeader Tag="길드 레벨"/>
                         </GridViewColumn.Header>
@@ -157,7 +158,7 @@
                         </GridViewColumn.CellTemplate>
                     </GridViewColumn>
 
-                    <GridViewColumn Width="165">
+                    <GridViewColumn Width="165" c:GridViewSort.PropertyName="Master">
                         <GridViewColumn.Header>
                             <GridViewColumnHeader Tag="길드 마스터"/>
                         </GridViewColumn.Header>
@@ -172,7 +173,7 @@
                         </GridViewColumn.CellTemplate>
                     </GridViewColumn>
 
-                    <GridViewColumn Width="115">
+                    <GridViewColumn Width="115" c:GridViewSort.PropertyName="Score">
                         <GridViewColumn.Header>
                             <GridViewColumnHeader Tag="점수"/>
                         </GridViewColumn.Header>
@@ -186,7 +187,7 @@
                         </GridViewColumn.CellTemplate>
                     </GridViewColumn>
 
-                    <GridViewColumn Width="100">
+                    <GridViewColumn Width="100" c:GridViewSort.PropertyName="Point">
                         <GridViewColumn.Header>
                             <GridViewColumnHeader Tag="노블포인트"/>
                         </GridViewColumn.Header>

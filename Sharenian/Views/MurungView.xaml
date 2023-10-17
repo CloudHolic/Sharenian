@@ -59,7 +59,8 @@
             </c:FlatButton>
         </DockPanel>
 
-        <ListView Grid.Row="1" Margin="5" BorderThickness="0" ItemsSource="{Binding UserList}">
+        <ListView Grid.Row="1" Margin="5" BorderThickness="0" ItemsSource="{Binding UserList}"
+                  IsSynchronizedWithCurrentItem="True" c:GridViewSort.AutoSort="True">
             <ListView.Resources>
                 <ControlTemplate x:Key="NormalTemplate" TargetType="ListViewItem">
                     <Border CornerRadius="5" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Background="Transparent"
@@ -114,7 +115,7 @@
 
             <ListView.View>
                 <GridView ColumnHeaderContainerStyle="{StaticResource FlatGridViewTextHeaderStyle}" AllowsColumnReorder="False">
-                    <GridViewColumn Width="160">
+                    <GridViewColumn Width="160" c:GridViewSort.PropertyName="NickName">
                         <GridViewColumn.Header>
                             <GridViewColumnHeader Tag="닉네임"/>
                         </GridViewColumn.Header>
@@ -129,7 +130,7 @@
                         </GridViewColumn.CellTemplate>
                     </GridViewColumn>
 
-                    <GridViewColumn Width="160">
+                    <GridViewColumn Width="160" c:GridViewSort.PropertyName="Job">
                         <GridViewColumn.Header>
                             <GridViewColumnHeader Tag="직업"/>
                         </GridViewColumn.Header>
@@ -144,7 +145,7 @@
                         </GridViewColumn.CellTemplate>
                     </GridViewColumn>
 
-                    <GridViewColumn Width="100">
+                    <GridViewColumn Width="100" c:GridViewSort.PropertyName="Level">
                         <GridViewColumn.Header>
                             <GridViewColumnHeader Tag="레벨"/>
                         </GridViewColumn.Header>
@@ -159,7 +160,7 @@
                         </GridViewColumn.CellTemplate>
                     </GridViewColumn>
 
-                    <GridViewColumn Width="100">
+                    <GridViewColumn Width="100" c:GridViewSort.PropertyName="Murung">
                         <GridViewColumn.Header>
                             <GridViewColumnHeader Tag="무릉"/>
                         </GridViewColumn.Header>
@@ -174,7 +175,7 @@
                         </GridViewColumn.CellTemplate>
                     </GridViewColumn>
 
-                    <GridViewColumn Width="160">
+                    <GridViewColumn Width="160" c:GridViewSort.PropertyName="LastActivity">
                         <GridViewColumn.Header>
                             <GridViewColumnHeader Tag="마지막 활동일"/>
                         </GridViewColumn.Header>
@@ -182,7 +183,7 @@
                             <DataTemplate DataType="m:User">
                                 <Grid Height="30">
                                     <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center"
-                                           Text="{Binding LastActivity}" FontSize="15" Foreground="#404D61"/>
+                                               Text="{Binding LastActivity, StringFormat=\{0\}일 전}" FontSize="15" Foreground="#404D61"/>
                                 </Grid>
                             </DataTemplate>
                         </GridViewColumn.CellTemplate>

@@ -12,7 +12,7 @@ public class User : ObservableObject
 
     public int Murung { get; set; }
 
-    public string LastActivity { get; set; }
+    public int LastActivity { get; set; }
 
     public User()
     {
@@ -20,10 +20,10 @@ public class User : ObservableObject
         Job = string.Empty;
         Level = 0;
         Murung = 0;
-        LastActivity = string.Empty;
+        LastActivity = 0;
     }
 
-    public User(string nickname, string job, int level, int murung, string lastActivity)
+    public User(string nickname, string job, int level, int murung, int lastActivity)
     {
         NickName = nickname;
         Job = job;

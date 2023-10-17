@@ -65,12 +65,12 @@ public partial class SharenianViewModel : ObservableRecipient
         var progress = progressHandler as IProgress<int>;
         Progress = 0;
         
-        var guilds = await Task.Run(async () =>
+        var guilds = await Task.Run(() =>
         {
             var result = new List<Guild>();
             for (var page = 1; ; page++)
             {
-                var pagedGuild = await WebCrawler.GetGuilds(Server, page);
+                var pagedGuild = WebCrawler.GetGuilds(Server, page);
                 if (pagedGuild.Count == 0)
                     break;
 

@@ -17,10 +17,10 @@ public static class WebCrawler
 
     private static string MapleggBaseUrl => "https://maple.gg";
     
-    public static async Task<List<Guild>> GetGuilds(ServerCode server, int page)
+    public static List<Guild> GetGuilds(ServerCode server, int page)
     {
         var response = $"{NexonBaseUrl}/N23Ranking/World/Guild?w={(int)server}&t=2&page={page}".GetAsync().Result;
-        var doc = await response.ResponseMessage.Content.ReadAsStringAsync();
+        var doc = response.ResponseMessage.Content.ReadAsStringAsync().Result;
 
         var htmlDoc = new HtmlDocument();
         htmlDoc.LoadHtml(doc);
@@ -50,9 +50,9 @@ public static class WebCrawler
         return list;
     }
 
-    public static async Task<List<User>> GetGuildMembers(ServerCode server, string guildName)
+    public static List<User> GetGuildMembers(ServerCode server, string guildName)
     {
-        var html = await GetRawGuildMembers(server, guildName);
+        var html = GetRawGuildMembers(server, guildName).Result;
 
         var htmlDoc = new HtmlDocument();
         htmlDoc.LoadHtml(html);
@@ -77,7 +77,7 @@ public static class WebCrawler
                 var jobAndLevel = rawData[i - 1].Split('/');
                 var nickname = rawData[i - 2];
                 var (job, level) = (jobAndLevel[0], int.Parse(jobAndLevel[1].Split('.')[1]));
-                var lastActivity = rawData[i].Split(':')[1].Trim();
+                var lastActivity = int.Parse(rawData[i].Split(':')[1].Split("일")[0].Trim());
                 list.Add(new User(nickname, job, level, 0, lastActivity));
             }
         }
@@ -85,10 +85,10 @@ public static class WebCrawler
         return list;
     }
 
-    public static async Task<int> GetMurung(string userName)
+    public static int GetMurung(string userName)
     {
         var response = $"{MapleggBaseUrl}/u/{HttpUtility.UrlEncode(userName).ToUpper()}".GetAsync().Result;
-        var doc = await response.ResponseMessage.Content.ReadAsStringAsync();
+        var doc = response.ResponseMessage.Content.ReadAsStringAsync().Result;
 
         var htmlDoc = new HtmlDocument();
         htmlDoc.LoadHtml(doc);
