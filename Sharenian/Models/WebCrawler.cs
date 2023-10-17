@@ -4,13 +4,10 @@ using System.Globalization;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Web;
-using System.Windows.Controls;
-using System.Windows;
 using Flurl.Http;
 using HtmlAgilityPack;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
-using OpenQA.Selenium.DevTools.V116.Storage;
 
 namespace Sharenian.Models;
 
