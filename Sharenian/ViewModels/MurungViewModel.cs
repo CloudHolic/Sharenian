@@ -76,7 +76,20 @@ public partial class MurungViewModel : ObservableRecipient
         var progress = progressHandler as IProgress<int>;
         Progress = 0;
 
+        var users = await WebCrawler.GetGuildMembers(Server, Guild);
+        progress.Report(1000 / (users.Count + 1));
+
+        await Task.Run(async () =>
+        {
+            for (var i = 0; i < users.Count; i++)
+            {
+                users[i].Murung = await WebCrawler.GetMurung(users[i].NickName);
+                progress.Report(1000 * (i + 2) / (users.Count + 1));
+            }
+        });
+
         UserList.Clear();
+        users.ForEach(UserList.Add);
     }
 
     [RelayCommand(AllowConcurrentExecutions = false)]

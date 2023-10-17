@@ -67,16 +67,15 @@ public partial class SharenianViewModel : ObservableRecipient
         
         var guilds = await Task.Run(async () =>
         {
-            var crawler = new SharenianCrawler(Server);
             var result = new List<Guild>();
             for (var page = 1; ; page++)
             {
-                var pagedGuild = await crawler.GetGuilds(page);
+                var pagedGuild = await WebCrawler.GetGuilds(Server, page);
                 if (pagedGuild.Count == 0)
                     break;
 
                 result.AddRange(pagedGuild);
-                progress.Report(100 * page / 150);
+                progress.Report(1000 * page / 150);
             }
 
             return result;

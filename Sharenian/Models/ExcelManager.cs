@@ -45,7 +45,7 @@ public class ExcelManager
 
                 worksheet.Cells[x.Order + 1, 5].Style.Numberformat.Format = "#,##";
 
-                progress.Report(100 * x.Order / count);
+                progress.Report(1000 * x.Order / count);
             }));
         
         worksheet.Cells.AutoFitColumns();
@@ -87,7 +87,7 @@ public class ExcelManager
                 worksheet.Cells[index + 2, 4].Value = $"{user.Murung}층";
                 worksheet.Cells[index + 2, 5].Value = user.LastActivity;
 
-                progress.Report(100 * index / count);
+                progress.Report(1000 * index / count);
             }));
 
         worksheet.Cells.AutoFitColumns();

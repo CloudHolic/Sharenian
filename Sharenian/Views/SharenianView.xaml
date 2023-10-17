@@ -19,7 +19,7 @@
             <RowDefinition Height="20"/>
         </Grid.RowDefinitions>
 
-        <DockPanel Grid.Row="0" VerticalAlignment="Center">
+        <DockPanel Grid.Row="0" VerticalAlignment="Stretch">
             <ComboBox DockPanel.Dock="Left" VerticalAlignment="Stretch" Style="{StaticResource FlatComboBoxStyle}"
                       Margin="5,15,0,5" FontSize="15" BorderThickness="1" BorderBrush="Black"
                       ItemsSource="{Binding Server, Converter={cv:EnumToCollectionConverter}, ConverterParameter='Single', Mode=OneTime}"
@@ -35,7 +35,7 @@
                     </Grid.ColumnDefinitions>
 
                     <Image Grid.Column="0" Source="{StaticResource LeftRotateArrowImage}" Margin="5,0"
-                       Height="{Binding ActualHeight, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=Grid}}"/>
+                           Height="{Binding ActualHeight, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=Grid}}"/>
 
                     <TextBlock Grid.Column="1" Text="Load" VerticalAlignment="Center" Margin="5,0,0,0" FontSize="15"/>
                 </Grid>
@@ -49,8 +49,8 @@
                         <ColumnDefinition Width="3*"/>
                     </Grid.ColumnDefinitions>
 
-                    <Image Grid.Column="0" Source="{StaticResource ExportImage}"
-                       Height="{Binding ActualHeight, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=Grid}}"/>
+                    <Image Grid.Column="0" Source="{StaticResource ExportImage}" Width="17"
+                           Height="{Binding ActualHeight, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=Grid}}"/>
 
                     <TextBlock Grid.Column="1" Text="Export" VerticalAlignment="Center" FontSize="15"/>
                 </Grid>
@@ -204,11 +204,11 @@
         </ListView>
 
         <Grid Grid.Row="2" Margin="5" Visibility="{Binding IsEnabled, ElementName=LoadButton, Converter={cv:BooleanToVisibilityConverter}, ConverterParameter=Inverted}">
-            <ProgressBar Value="{Binding Progress}" Maximum="100" Minimum="0"/>
+            <ProgressBar Value="{Binding Progress}" Maximum="1000" Minimum="0"/>
         </Grid>
 
         <Grid Grid.Row="2" Margin="5" Visibility="{Binding IsEnabled, ElementName=ExportButton, Converter={cv:BooleanToVisibilityConverter}, ConverterParameter=Inverted}">
-            <ProgressBar Value="{Binding Progress}" Maximum="100" Minimum="0"/>
+            <ProgressBar Value="{Binding Progress}" Maximum="1000" Minimum="0"/>
         </Grid>
     </Grid>
 </UserControl>
