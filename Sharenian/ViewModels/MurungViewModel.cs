@@ -69,7 +69,6 @@ public partial class MurungViewModel : ObservableRecipient
     #region Commands
 
     [RelayCommand(AllowConcurrentExecutions = false)]
-    [UsedImplicitly]
     private async Task Load()
     {
         var progressHandler = new Progress<int>(value => Progress = value);
@@ -98,7 +97,6 @@ public partial class MurungViewModel : ObservableRecipient
     }
 
     [RelayCommand(AllowConcurrentExecutions = false)]
-    [UsedImplicitly]
     private async Task Export()
     {
         var saveFileDialog = new SaveFileDialog

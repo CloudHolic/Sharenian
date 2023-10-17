@@ -7,7 +7,6 @@ using System.Linq;
 using System.Threading.Tasks;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
-using JetBrains.Annotations;
 using Microsoft.Win32;
 using Sharenian.Models;
 
@@ -58,7 +57,6 @@ public partial class SharenianViewModel : ObservableRecipient
     #region Commands
 
     [RelayCommand(AllowConcurrentExecutions = false)]
-    [UsedImplicitly]
     private async Task Load()
     {
         var progressHandler = new Progress<int>(value => Progress = value);
@@ -90,7 +88,6 @@ public partial class SharenianViewModel : ObservableRecipient
     }
 
     [RelayCommand(AllowConcurrentExecutions = false)]
-    [UsedImplicitly]
     private async Task Export()
     {
         var saveFileDialog = new SaveFileDialog
