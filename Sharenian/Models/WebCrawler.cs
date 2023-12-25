@@ -57,7 +57,7 @@ public static class WebCrawler
         catch (Exception e)
         {
             Logger.Error(e, $"{nameof(GetGuilds)} failed.");
-            return new List<Guild>();
+            return [];
         }
     }
 
