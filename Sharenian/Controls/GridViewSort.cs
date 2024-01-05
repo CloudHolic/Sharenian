@@ -40,10 +40,15 @@ public class GridViewSort
 
         var (oldValue, newValue) = ((bool)e.OldValue, (bool)e.NewValue);
 
-        if (oldValue && !newValue)
-            listView.RemoveHandler(ButtonBase.ClickEvent, new RoutedEventHandler(ColumnHeader_Click));
-        if (!oldValue && newValue)
-            listView.AddHandler(ButtonBase.ClickEvent, new RoutedEventHandler(ColumnHeader_Click));
+        switch (oldValue)
+        {
+            case true when !newValue:
+                listView.RemoveHandler(ButtonBase.ClickEvent, new RoutedEventHandler(ColumnHeader_Click));
+                break;
+            case false when newValue:
+                listView.AddHandler(ButtonBase.ClickEvent, new RoutedEventHandler(ColumnHeader_Click));
+                break;
+        }
     }
 
     #endregion
@@ -85,6 +90,9 @@ public class GridViewSort
             return;
 
         var listView = GetAncestor<ListView>(headerClicked);
+        if (listView == null)
+            return;
+
         var command = GetCommand(listView);
 
         if (command != null && command.CanExecute(propertyName))
@@ -94,13 +102,13 @@ public class GridViewSort
 
         #region Local Functions
 
-        static T GetAncestor<T>(DependencyObject reference) where T : DependencyObject
+        static T? GetAncestor<T>(DependencyObject reference) where T : DependencyObject
         {
             var parent = VisualTreeHelper.GetParent(reference);
-            while (parent is not T)
+            while (parent is not null and not T)
                 parent = VisualTreeHelper.GetParent(parent);
 
-            return (T)parent;
+            return (T?)parent;
         }
 
         static void ApplySort(ICollectionView view, string propertyName)

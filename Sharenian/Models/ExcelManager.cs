@@ -18,7 +18,7 @@ public class ExcelManager
         FilePath = filePath;
     }
 
-    public async Task WriteGuildToExcel(List<Guild> guildList, IProgress<int> progress)
+    public async Task WriteGuildToExcel(List<GuildInfo> guildList, IProgress<int> progress)
     {
         if (string.IsNullOrEmpty(FilePath))
             return;
@@ -56,7 +56,7 @@ public class ExcelManager
         await package.SaveAsAsync(FilePath);
     }
 
-    public async Task WriteUserToExcel(List<User> userList, IProgress<int> progress)
+    public async Task WriteUserToExcel(List<UserInfo> userList, IProgress<int> progress)
     {
         if (string.IsNullOrEmpty(FilePath))
             return;
@@ -68,7 +68,6 @@ public class ExcelManager
         worksheet.Cells[1, 2].Value = "직업";
         worksheet.Cells[1, 3].Value = "레벨";
         worksheet.Cells[1, 4].Value = "무릉";
-        worksheet.Cells[1, 5].Value = "마지막 활동일";
 
         var count = userList.Count;
         await Task.Run(() => userList.Select((x, i) => new
@@ -84,8 +83,7 @@ public class ExcelManager
                 worksheet.Cells[index + 2, 1].Value = user.NickName;
                 worksheet.Cells[index + 2, 2].Value = user.Job;
                 worksheet.Cells[index + 2, 3].Value = $"Lv.{user.Level}";
-                worksheet.Cells[index + 2, 4].Value = $"{user.Murung}층";
-                worksheet.Cells[index + 2, 5].Value = $"{user.LastActivity}일 전";
+                worksheet.Cells[index + 2, 4].Value = user.ExpRate;
 
                 progress.Report(1000 * index / count);
             }));

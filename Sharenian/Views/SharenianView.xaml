@@ -7,6 +7,7 @@
              xmlns:cv="clr-namespace:Sharenian.Converters"
              xmlns:m="clr-namespace:Sharenian.Models"
              xmlns:vm="clr-namespace:Sharenian.ViewModels"
+             xmlns:sys="clr-namespace:System;assembly=mscorlib"
              mc:Ignorable="d" d:DesignHeight="800" d:DesignWidth="700">
     <UserControl.DataContext>
         <vm:SharenianViewModel/>
@@ -25,6 +26,21 @@
                       ItemsSource="{Binding Server, Converter={cv:EnumToCollectionConverter}, ConverterParameter='Single', Mode=OneTime}"
                       SelectedValue="{Binding Server, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                       DisplayMemberPath="Description" SelectedValuePath="Value"/>
+
+            <ComboBox VerticalAlignment="Stretch" Style="{StaticResource FlatComboBoxStyle}"
+                      Margin="25,15,0,5" Width="100" FontSize="15" BorderThickness="1" BorderBrush="Black"
+                      VerticalContentAlignment="Center" Padding="5,3,0,0" SelectedValue="{Binding IsThisWeek}">
+                <ComboBox.ItemTemplate>
+                    <DataTemplate>
+                        <TextBlock Text="{Binding Converter={cv:BooleanToComboBoxTextConverter}}"/>
+                    </DataTemplate>
+                </ComboBox.ItemTemplate>
+                
+                <ComboBox.Items>
+                    <sys:Boolean>True</sys:Boolean>
+                    <sys:Boolean>False</sys:Boolean>
+                </ComboBox.Items>
+            </ComboBox>
 
             <c:FlatButton x:Name="LoadButton" DockPanel.Dock="Right" Margin="0,15,30,5" Padding="5" Width="80" HorizontalAlignment="Right" HorizontalContentAlignment="Stretch"
                           Background="White" MouseOverBackground="#DDDDDD" PressedBackground="#DDDDDD" Command="{Binding LoadCommand}">
@@ -119,7 +135,7 @@
                         </GridViewColumn.Header>
 
                         <GridViewColumn.CellTemplate>
-                            <DataTemplate DataType="m:Guild">
+                            <DataTemplate DataType="m:GuildInfo">
                                 <Grid Height="30">
                                     <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center"
                                            Text="{Binding Order}" FontSize="15" Foreground="#404D61"/>
@@ -134,7 +150,7 @@
                         </GridViewColumn.Header>
 
                         <GridViewColumn.CellTemplate>
-                            <DataTemplate DataType="m:Guild">
+                            <DataTemplate DataType="m:GuildInfo">
                                 <Grid Height="30">
                                     <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center"
                                            Text="{Binding Name}" FontSize="15" Foreground="#404D61"/>
@@ -149,7 +165,7 @@
                         </GridViewColumn.Header>
 
                         <GridViewColumn.CellTemplate>
-                            <DataTemplate DataType="m:Guild">
+                            <DataTemplate DataType="m:GuildInfo">
                                 <Grid Height="30">
                                     <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" Margin="10,0,0,0"
                                            Text="{Binding Level}" FontSize="15" Foreground="#404D61"/>
@@ -164,7 +180,7 @@
                         </GridViewColumn.Header>
 
                         <GridViewColumn.CellTemplate>
-                            <DataTemplate DataType="m:Guild">
+                            <DataTemplate DataType="m:GuildInfo">
                                 <Grid Height="30">
                                     <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center"
                                            Text="{Binding Master}" FontSize="15" Foreground="#404D61"/>
@@ -178,7 +194,7 @@
                             <GridViewColumnHeader Tag="점수"/>
                         </GridViewColumn.Header>
                         <GridViewColumn.CellTemplate>
-                            <DataTemplate DataType="m:Guild">
+                            <DataTemplate DataType="m:GuildInfo">
                                 <Grid Height="30">
                                     <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center"
                                            Text="{Binding Score}" FontSize="15" Foreground="#404D61"/>
@@ -192,7 +208,7 @@
                             <GridViewColumnHeader Tag="노블포인트"/>
                         </GridViewColumn.Header>
                         <GridViewColumn.CellTemplate>
-                            <DataTemplate DataType="m:Guild">
+                            <DataTemplate DataType="m:GuildInfo">
                                 <Grid Height="30">
                                     <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center"
                                            Text="{Binding Point}" FontSize="15" Foreground="Red"/>

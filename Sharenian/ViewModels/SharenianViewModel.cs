@@ -3,12 +3,13 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.IO;
-using System.Linq;
 using System.Threading.Tasks;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using Microsoft.Win32;
+using Sharenian.Api.MapleStory;
 using Sharenian.Models;
+using Sharenian.Utils;
 
 namespace Sharenian.ViewModels;
 
@@ -18,9 +19,9 @@ public partial class SharenianViewModel : ObservableRecipient
 
     #region public ObservableCollection<Guild> GuildList
 
-    private ObservableCollection<Guild> _guildList = new();
+    private ObservableCollection<GuildInfo> _guildList = [];
 
-    public ObservableCollection<Guild> GuildList
+    public ObservableCollection<GuildInfo> GuildList
     {
         get => _guildList;
         set => SetProperty(ref _guildList, value);
@@ -52,8 +53,20 @@ public partial class SharenianViewModel : ObservableRecipient
 
     #endregion
 
+    #region public bool IsThisWeek
+
+    private bool _isThisWeek;
+
+    public bool IsThisWeek
+    {
+        get => _isThisWeek;
+        set => SetProperty(ref _isThisWeek, value);
+    }
+
     #endregion
-    
+
+    #endregion
+
     #region Commands
 
     [RelayCommand(AllowConcurrentExecutions = false)]
@@ -62,22 +75,17 @@ public partial class SharenianViewModel : ObservableRecipient
         var progressHandler = new Progress<int>(value => Progress = value);
         var progress = progressHandler as IProgress<int>;
         Progress = 0;
-        
-        var guilds = await Task.Run(() =>
+
+        var guilds = new List<GuildInfo>();
+        for (var page = 1; ; page++)
         {
-            var result = new List<Guild>();
-            for (var page = 1; ; page++)
-            {
-                var pagedGuild = WebCrawler.GetGuilds(Server, page);
-                if (pagedGuild.Count == 0)
-                    break;
+            var pagedGuild = await GuildApis.GetGuildRankingsAsync(Server.GetDescription(), page, IsThisWeek);
+            if (pagedGuild.Count == 0)
+                break;
 
-                result.AddRange(pagedGuild);
-                progress.Report(1000 * page / 150);
-            }
-
-            return result;
-        });
+            guilds.AddRange(pagedGuild);
+            progress.Report(1000 * page / 12);
+        }
 
         GuildList.Clear();
         guilds.ForEach(x =>
@@ -95,7 +103,7 @@ public partial class SharenianViewModel : ObservableRecipient
             InitialDirectory = Directory.GetCurrentDirectory(),
             Title = "저장 위치",
             DefaultExt = "xlsx",
-            Filter = "xlsx files(*.xlsx)|*.xlsx"
+            Filter = "Xlsx files(*.xlsx)|*.xlsx"
         };
 
         if (!(saveFileDialog.ShowDialog() ?? false))
@@ -104,7 +112,7 @@ public partial class SharenianViewModel : ObservableRecipient
         var progressHandler = new Progress<int>(value => Progress = value);
         var manager = new ExcelManager(saveFileDialog.FileName);
 
-        await manager.WriteGuildToExcel(GuildList.ToList(), progressHandler);
+        await manager.WriteGuildToExcel([.. GuildList], progressHandler);
 
         _ = Process.Start("explorer.exe", $"/select, {saveFileDialog.FileName}");
     }

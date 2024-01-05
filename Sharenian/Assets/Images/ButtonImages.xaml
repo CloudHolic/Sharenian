@@ -47,4 +47,25 @@
             </DrawingGroup>
         </DrawingImage.Drawing>
     </DrawingImage>
+
+    <DrawingImage x:Key="AddImage">
+        <DrawingImage.Drawing>
+            <DrawingGroup ClipGeometry="M0,0 V410 H412 V0 H0 Z">
+                <DrawingGroup Opacity="1" Transform="0.1,0,0,-0.1,0,410">
+                    <GeometryDrawing Brush="#FF000000" Geometry="F1 M412,410z M0,0z M1675,4013C1658,4011,1631,3999,1615,3986L1586,3963 1582,3247 1577,2532 876,2528C112,2524 120,2524 101,2468 85,2424 86,
+                                     1660 101,1626 124,1576 127,1576 878,1572L1580,1569 1580,962C1581,132 1582,111 1648,93 1663,88 1857,85 2079,85L2484,85 2504,120C2525,154,2525,169,2528,863L2531,1570 3003,
+                                     1570C3263,1570 3587,1572 3724,1574 3972,1577 3973,1577 3990,1601 4000,1614 4011,1637 4014,1653 4024,1705 4021,2423 4010,2461 4004,2481 3992,2504 3983,2511 3965,2527 3812,
+                                     2530 3018,2530L2531,2530 2528,3238C2525,3931,2525,3946,2504,3980L2484,4015 2094,4016C1880,4016,1691,4015,1675,4013z" />
+                </DrawingGroup>
+            </DrawingGroup>
+        </DrawingImage.Drawing>
+    </DrawingImage>
+
+    <DrawingImage x:Key="ClearImage">
+        <DrawingImage.Drawing>
+            <DrawingGroup ClipGeometry="M0,0 V64 H64 V0 H0 Z">
+                <GeometryDrawing Brush="#FF000000" Geometry="F1 M64,64z M0,0z M62,10.571L53.429,2 32,23.429 10.571,2 2,10.571 23.429,32 2,53.429 10.571,62 32,40.571 53.429,62 62,53.429 40.571,32z" />
+            </DrawingGroup>
+        </DrawingImage.Drawing>
+    </DrawingImage>
 </ResourceDictionary>

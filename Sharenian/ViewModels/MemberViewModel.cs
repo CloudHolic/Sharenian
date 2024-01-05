@@ -1,26 +1,27 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.IO;
-using System.Linq;
 using System.Threading.Tasks;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
-using JetBrains.Annotations;
 using Microsoft.Win32;
+using Sharenian.Api.MapleStory;
 using Sharenian.Models;
+using Sharenian.Utils;
 
 namespace Sharenian.ViewModels;
 
-public partial class MurungViewModel : ObservableRecipient
+public partial class MemberViewModel : ObservableRecipient
 {
     #region Properties
 
-    #region public ObservableCollection<Guild> GuildList
+    #region public ObservableCollection<UserInfo> UserList
 
-    private ObservableCollection<User> _userList = new();
+    private ObservableCollection<UserInfo> _userList = [];
 
-    public ObservableCollection<User> UserList
+    public ObservableCollection<UserInfo> UserList
     {
         get => _userList;
         set => SetProperty(ref _userList, value);
@@ -75,22 +76,21 @@ public partial class MurungViewModel : ObservableRecipient
         var progress = progressHandler as IProgress<int>;
         Progress = 0;
 
-        var users = await Task.Run(() =>
-        {
-            var users = WebCrawler.GetGuildMembers(Server, Guild);
-            progress.Report(1000 / (users.Count + 1));
-            return users;
-        }).ContinueWith(task =>
-        {
-            var users = task.Result;
-            for (var i = 0; i < users.Count; i++)
-            {
-                users[i].Murung = WebCrawler.GetMurung(users[i].NickName);
-                progress.Report(1000 * (i + 2) / (users.Count + 1));
-            }
+        var members = await GuildApis.GetGuildMembersAsync(Guild, Server.GetDescription());
+        progress.Report(1000 / (members.Count + 1));
 
-            return users;
-        });
+        var users = new List<UserInfo>();
+        for(var i = 0; i < members.Count; i++)
+        {
+            var nickname = members[i];
+            var info = await CharacterApis.GetCharacterInfo(nickname);
+
+            progress.Report(1000 * (i + 2) / (members.Count + 1));
+            if (info.NickName != nickname)
+                continue;
+
+            users.Add(info);
+        }
 
         UserList.Clear();
         users.ForEach(UserList.Add);
@@ -104,7 +104,7 @@ public partial class MurungViewModel : ObservableRecipient
             InitialDirectory = Directory.GetCurrentDirectory(),
             Title = "저장 위치",
             DefaultExt = "xlsx",
-            Filter = "xlsx files(*.xlsx)|*.xlsx"
+            Filter = "Xlsx files(*.xlsx)|*.xlsx"
         };
 
         if (!(saveFileDialog.ShowDialog() ?? false))
@@ -113,7 +113,7 @@ public partial class MurungViewModel : ObservableRecipient
         var progressHandler = new Progress<int>(value => Progress = value);
         var manager = new ExcelManager(saveFileDialog.FileName);
 
-        await manager.WriteUserToExcel(UserList.ToList(), progressHandler);
+        await manager.WriteUserToExcel([.. UserList], progressHandler);
 
         _ = Process.Start("explorer.exe", $"/select, {saveFileDialog.FileName}");
     }

@@ -1,7 +1,8 @@
 ﻿<Application x:Class="Sharenian.App"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             StartupUri="/Views/MainWindowView.xaml">
+             StartupUri="/Views/MainWindowView.xaml" ShutdownMode="OnMainWindowClose"
+             DispatcherUnhandledException="Application_DispatcherUnhandledException">
     <Application.Resources>
         <ResourceDictionary Source="Assets/Resources.xaml"/>
     </Application.Resources>

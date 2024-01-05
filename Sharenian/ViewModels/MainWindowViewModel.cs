@@ -2,7 +2,4 @@
 
 namespace Sharenian.ViewModels;
 
-public class MainWindowViewModel : ObservableRecipient
-{
-
-}
+public class MainWindowViewModel : ObservableRecipient;

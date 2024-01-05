@@ -2,6 +2,7 @@
 using System.IO;
 using System.Text;
 using Serilog;
+using Sharenian.Api.MapleStory.Models;
 
 namespace Sharenian.Utils;
 
@@ -33,5 +34,7 @@ public class Logger
             .CreateLogger();
     }
 
-    public void Error(Exception exception, string message) => Log.Error(exception, message);
+    public void Error(Exception exception, string message = "") => Log.Error(exception, message);
+
+    public void HttpError(MapleStoryApiError error) => Log.Error($"{error.ErrorMessage.Name} - {error.ErrorMessage.Message}");
 }

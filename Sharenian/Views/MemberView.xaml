@@ -1,15 +1,15 @@
-﻿<UserControl x:Class="Sharenian.Views.MurungView"
+﻿<UserControl x:Class="Sharenian.Views.MemberView"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:vm="clr-namespace:Sharenian.ViewModels"
              xmlns:c="clr-namespace:Sharenian.Controls"
              xmlns:m="clr-namespace:Sharenian.Models"
              xmlns:cv="clr-namespace:Sharenian.Converters"
              mc:Ignorable="d" d:DesignHeight="800" d:DesignWidth="700">
     <UserControl.DataContext>
-        <vm:MurungViewModel/>
+        <vm:MemberViewModel/>
     </UserControl.DataContext>
 
     <Grid>
@@ -26,7 +26,8 @@
                       SelectedValue="{Binding Server, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                       DisplayMemberPath="Description" SelectedValuePath="Value"/>
 
-            <TextBox Margin="25,15,0,5" Width="150" Text="{Binding Guild, Mode=TwoWay}" VerticalAlignment="Stretch" FontSize="15" VerticalContentAlignment="Center" Padding="5,3,0,0"/>
+            <TextBox Margin="25,15,0,5" Width="150" Text="{Binding Guild, Mode=TwoWay}" VerticalAlignment="Stretch" FontSize="15" 
+                     VerticalContentAlignment="Center" Padding="5,3,0,0"/>
 
             <c:FlatButton x:Name="LoadButton" DockPanel.Dock="Right" Margin="0,15,30,5" Padding="5" Width="80" HorizontalAlignment="Right" HorizontalContentAlignment="Stretch"
                           Background="White" MouseOverBackground="#DDDDDD" PressedBackground="#DDDDDD" Command="{Binding LoadCommand}">
@@ -115,13 +116,13 @@
 
             <ListView.View>
                 <GridView ColumnHeaderContainerStyle="{StaticResource FlatGridViewTextHeaderStyle}" AllowsColumnReorder="False">
-                    <GridViewColumn Width="160" c:GridViewSort.PropertyName="NickName">
+                    <GridViewColumn Width="200" c:GridViewSort.PropertyName="NickName">
                         <GridViewColumn.Header>
                             <GridViewColumnHeader Tag="닉네임"/>
                         </GridViewColumn.Header>
 
                         <GridViewColumn.CellTemplate>
-                            <DataTemplate DataType="m:User">
+                            <DataTemplate DataType="m:UserInfo">
                                 <Grid Height="30">
                                     <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center"
                                            Text="{Binding NickName}" FontSize="15" Foreground="#404D61"/>
@@ -130,13 +131,13 @@
                         </GridViewColumn.CellTemplate>
                     </GridViewColumn>
 
-                    <GridViewColumn Width="160" c:GridViewSort.PropertyName="Job">
+                    <GridViewColumn Width="200" c:GridViewSort.PropertyName="Job">
                         <GridViewColumn.Header>
                             <GridViewColumnHeader Tag="직업"/>
                         </GridViewColumn.Header>
 
                         <GridViewColumn.CellTemplate>
-                            <DataTemplate DataType="m:User">
+                            <DataTemplate DataType="m:UserInfo">
                                 <Grid Height="30">
                                     <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center"
                                            Text="{Binding Job}" FontSize="15" Foreground="#404D61"/>
@@ -145,13 +146,13 @@
                         </GridViewColumn.CellTemplate>
                     </GridViewColumn>
 
-                    <GridViewColumn Width="100" c:GridViewSort.PropertyName="Level">
+                    <GridViewColumn Width="130" c:GridViewSort.PropertyName="Level">
                         <GridViewColumn.Header>
                             <GridViewColumnHeader Tag="레벨"/>
                         </GridViewColumn.Header>
 
                         <GridViewColumn.CellTemplate>
-                            <DataTemplate DataType="m:User">
+                            <DataTemplate DataType="m:UserInfo">
                                 <Grid Height="30">
                                     <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" Margin="10,0,0,0"
                                            Text="{Binding Level}" FontSize="15" Foreground="#404D61"/>
@@ -160,30 +161,16 @@
                         </GridViewColumn.CellTemplate>
                     </GridViewColumn>
 
-                    <GridViewColumn Width="100" c:GridViewSort.PropertyName="Murung">
+                    <GridViewColumn Width="150" c:GridViewSort.PropertyName="ExpRate">
                         <GridViewColumn.Header>
-                            <GridViewColumnHeader Tag="무릉"/>
+                            <GridViewColumnHeader Tag="경험치(%)"/>
                         </GridViewColumn.Header>
 
                         <GridViewColumn.CellTemplate>
-                            <DataTemplate DataType="m:User">
+                            <DataTemplate DataType="m:UserInfo">
                                 <Grid Height="30">
-                                    <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center"
-                                           Text="{Binding Murung}" FontSize="15" Foreground="#404D61"/>
-                                </Grid>
-                            </DataTemplate>
-                        </GridViewColumn.CellTemplate>
-                    </GridViewColumn>
-
-                    <GridViewColumn Width="160" c:GridViewSort.PropertyName="LastActivity">
-                        <GridViewColumn.Header>
-                            <GridViewColumnHeader Tag="마지막 활동일"/>
-                        </GridViewColumn.Header>
-                        <GridViewColumn.CellTemplate>
-                            <DataTemplate DataType="m:User">
-                                <Grid Height="30">
-                                    <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center"
-                                               Text="{Binding LastActivity, StringFormat=\{0\}일 전}" FontSize="15" Foreground="#404D61"/>
+                                    <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" Margin="10,0,0,0"
+                                               Text="{Binding ExpRate}" FontSize="15" Foreground="#404D61"/>
                                 </Grid>
                             </DataTemplate>
                         </GridViewColumn.CellTemplate>

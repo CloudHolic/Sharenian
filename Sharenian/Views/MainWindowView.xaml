@@ -23,8 +23,8 @@
                 <v:SharenianView/>
             </TabItem>
 
-            <TabItem Header="무릉" Style="{StaticResource NoBorderTabItem}">
-                <v:MurungView/>
+            <TabItem Header="멤버" Style="{StaticResource NoBorderTabItem}">
+                <v:MemberView/>
             </TabItem>
         </TabControl>
     </Grid>
