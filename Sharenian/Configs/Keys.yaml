@@ -1,4 +1,0 @@
-- name: MapleStory
-  base_address: https://open.api.nexon.com/maplestory/v1/
-  header: x-nxopen-api-key
-  key: (your_maplestory_api_key)
