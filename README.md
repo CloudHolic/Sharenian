@@ -1,0 +1,1 @@
+- Write your Maplestory API Key in Configs/Keys.yaml
