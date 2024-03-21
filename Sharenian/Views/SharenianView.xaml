@@ -144,7 +144,7 @@
                         </GridViewColumn.CellTemplate>
                     </GridViewColumn>
 
-                    <GridViewColumn Width="150" c:GridViewSort.PropertyName="Name">
+                    <GridViewColumn Width="140" c:GridViewSort.PropertyName="Name">
                         <GridViewColumn.Header>
                             <GridViewColumnHeader Tag="길드명"/>
                         </GridViewColumn.Header>
@@ -159,7 +159,7 @@
                         </GridViewColumn.CellTemplate>
                     </GridViewColumn>
 
-                    <GridViewColumn Width="100" c:GridViewSort.PropertyName="Level">
+                    <GridViewColumn Width="90" c:GridViewSort.PropertyName="Level">
                         <GridViewColumn.Header>
                             <GridViewColumnHeader Tag="길드 레벨"/>
                         </GridViewColumn.Header>
@@ -174,7 +174,7 @@
                         </GridViewColumn.CellTemplate>
                     </GridViewColumn>
 
-                    <GridViewColumn Width="165" c:GridViewSort.PropertyName="Master">
+                    <GridViewColumn Width="140" c:GridViewSort.PropertyName="Master">
                         <GridViewColumn.Header>
                             <GridViewColumnHeader Tag="길드 마스터"/>
                         </GridViewColumn.Header>
@@ -189,7 +189,22 @@
                         </GridViewColumn.CellTemplate>
                     </GridViewColumn>
 
-                    <GridViewColumn Width="115" c:GridViewSort.PropertyName="Score">
+                    <GridViewColumn Width="80" c:GridViewSort.PropertyName="Master">
+                        <GridViewColumn.Header>
+                            <GridViewColumnHeader Tag="길드원 수"/>
+                        </GridViewColumn.Header>
+
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate DataType="m:GuildInfo">
+                                <Grid Height="30">
+                                    <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center"
+                                               Text="{Binding MemberCount}" FontSize="15" Foreground="#404D61"/>
+                                </Grid>
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+
+                    <GridViewColumn Width="95" c:GridViewSort.PropertyName="Score">
                         <GridViewColumn.Header>
                             <GridViewColumnHeader Tag="점수"/>
                         </GridViewColumn.Header>
@@ -203,7 +218,7 @@
                         </GridViewColumn.CellTemplate>
                     </GridViewColumn>
 
-                    <GridViewColumn Width="100" c:GridViewSort.PropertyName="Point">
+                    <GridViewColumn Width="90" c:GridViewSort.PropertyName="Point">
                         <GridViewColumn.Header>
                             <GridViewColumnHeader Tag="노블포인트"/>
                         </GridViewColumn.Header>

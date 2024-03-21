@@ -2,7 +2,7 @@
 
 namespace Sharenian.Models;
 
-public class GuildInfo(int order, string name, int level, string master, long score, int point = 0) : ObservableObject
+public class GuildInfo(int order, string name, int level, string master, long score, int memberCount, int point = 0) : ObservableObject
 {
     public int Order { get; set; } = order;
 
@@ -14,13 +14,15 @@ public class GuildInfo(int order, string name, int level, string master, long sc
 
     public long Score { get; set; } = score;
 
+    public int MemberCount { get; set; } = memberCount;
+
     public int Point { get; set; } = point;
 
-    public GuildInfo() : this(0, string.Empty, 1, string.Empty, 0)
+    public GuildInfo() : this(0, string.Empty, 1, string.Empty, 0, 0)
     {
     }
 
-    public GuildInfo(GuildInfo prevGuild) : this(prevGuild.Order, prevGuild.Name, prevGuild.Level, prevGuild.Master, prevGuild.Score, prevGuild.Point)
+    public GuildInfo(GuildInfo prevGuild) : this(prevGuild.Order, prevGuild.Name, prevGuild.Level, prevGuild.Master, prevGuild.Score, prevGuild.MemberCount, prevGuild.Point)
     {
     }
 

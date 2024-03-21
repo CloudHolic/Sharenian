@@ -104,8 +104,11 @@ public static class GuildApis
                 .GetAsync()
                 .ReceiveJson<GuildRanking>();
 
-            return result.Ranking
-                .Select(x => new GuildInfo(x.Rank, x.Name, x.Level, x.Master, x.Point))
+            var ranking = result.Ranking;
+            var guilds = await Task.WhenAll(ranking.Select(x => GetGuildMembersAsync(x.Name, worldName)));
+
+            return ranking
+                .Select((x, i) => new GuildInfo(x.Rank, x.Name, x.Level, x.Master, x.Point, guilds[i].Count))
                 .ToList();
         }
         catch (FlurlHttpException e)
