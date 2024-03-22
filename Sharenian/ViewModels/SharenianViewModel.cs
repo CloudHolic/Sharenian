@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.IO;
+using System.Threading;
 using System.Threading.Tasks;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
@@ -85,6 +86,7 @@ public partial class SharenianViewModel : ObservableRecipient
 
             guilds.AddRange(pagedGuild);
             progress.Report(1000 * page / 12);
+            Thread.Sleep(TimeSpan.FromSeconds(1));
         }
 
         GuildList.Clear();
