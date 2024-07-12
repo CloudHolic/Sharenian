@@ -55,10 +55,4 @@ public class GuildBasic
 
     [JsonPropertyName("guild_noblesse_skill")]
     public required List<GuildSkill> Noblesse { get; set; }
-
-    [JsonPropertyName("guild_mark")]
-    public required string Mark { get; set; }
-
-    [JsonPropertyName("guild_mark_custom")]
-    public required string CustomMark { get; set; }
 }
