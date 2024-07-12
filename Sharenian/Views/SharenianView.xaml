@@ -27,20 +27,9 @@
                       SelectedValue="{Binding Server, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                       DisplayMemberPath="Description" SelectedValuePath="Value"/>
 
-            <ComboBox VerticalAlignment="Stretch" Style="{StaticResource FlatComboBoxStyle}"
-                      Margin="25,15,0,5" Width="100" FontSize="15" BorderThickness="1" BorderBrush="Black"
-                      VerticalContentAlignment="Center" Padding="5,3,0,0" SelectedValue="{Binding IsThisWeek}">
-                <ComboBox.ItemTemplate>
-                    <DataTemplate>
-                        <TextBlock Text="{Binding Converter={cv:BooleanToComboBoxTextConverter}}"/>
-                    </DataTemplate>
-                </ComboBox.ItemTemplate>
-                
-                <ComboBox.Items>
-                    <sys:Boolean>True</sys:Boolean>
-                    <sys:Boolean>False</sys:Boolean>
-                </ComboBox.Items>
-            </ComboBox>
+            <ComboBox VerticalAlignment="Stretch" Style="{StaticResource FlatComboBoxStyle}" VerticalContentAlignment="Center" Width="150" FontSize="15"
+                      Margin="25,15,0,5" Padding="5,3,0,0" BorderThickness="1" BorderBrush="Black"
+                      ItemsSource="{Binding Dates}" DisplayMemberPath="Display" SelectedValue="{Binding SelectedDate}"/>
 
             <c:FlatButton x:Name="LoadButton" DockPanel.Dock="Right" Margin="0,15,30,5" Padding="5" Width="80" HorizontalAlignment="Right" HorizontalContentAlignment="Stretch"
                           Background="White" MouseOverBackground="#DDDDDD" PressedBackground="#DDDDDD" Command="{Binding LoadCommand}">

@@ -87,12 +87,10 @@ public static class GuildApis
         }
     }
 
-    public static async Task<List<GuildInfo>> GetGuildRankingsAsync(string worldName, int page, bool thisWeek)
+    public static async Task<List<GuildInfo>> GetGuildRankingsAsync(string worldName, int page, DateTime date)
     {
         try
         {
-            var date = thisWeek ? DateTime.Now : DateTime.Now.StartOfWeek(DayOfWeek.Monday);
-
             var result = await BaseAddress.AppendPathSegments("ranking", "guild")
                 .SetQueryParams(new
                 {

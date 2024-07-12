@@ -2,7 +2,10 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
+using System.Globalization;
 using System.IO;
+using System.Linq;
+using System.Runtime.InteropServices.JavaScript;
 using System.Threading;
 using System.Threading.Tasks;
 using CommunityToolkit.Mvvm.ComponentModel;
@@ -54,17 +57,52 @@ public partial class SharenianViewModel : ObservableRecipient
 
     #endregion
 
-    #region public bool IsThisWeek
+    #region Public DateRange SelectedDate
 
-    private bool _isThisWeek;
+    private DateRange _selectedDate = new();
 
-    public bool IsThisWeek
+    public DateRange SelectedDate
     {
-        get => _isThisWeek;
-        set => SetProperty(ref _isThisWeek, value);
+        get => _selectedDate;
+        set => SetProperty(ref _selectedDate, value);
     }
 
     #endregion
+
+    #region Public ObservableCollection<DateRange> Dates
+
+    private ObservableCollection<DateRange> _dates = [];
+
+    public ObservableCollection<DateRange> Dates
+    {
+        get => _dates;
+        set => SetProperty(ref _dates, value);
+    }
+
+    #endregion
+
+    #endregion
+
+    #region Constructor
+
+    public SharenianViewModel()
+    {
+        var today = DateTime.Today;
+        if (today.DayOfWeek == DayOfWeek.Thursday)
+        {
+            Dates.Add(new DateRange(today));
+            Dates.Add(new DateRange(today.AddDays(-7)));
+            SelectedDate = Dates[0];
+        }
+        else
+        {
+            var thursday = today.StartOfWeek(DayOfWeek.Thursday);
+            Dates.Add(new DateRange(today));
+            Dates.Add(new DateRange(thursday));
+            Dates.Add(new DateRange(thursday.AddDays(-7)));
+            SelectedDate = Dates[1];
+        }
+    }
 
     #endregion
 
@@ -80,7 +118,7 @@ public partial class SharenianViewModel : ObservableRecipient
         var guilds = new List<GuildInfo>();
         for (var page = 1; ; page++)
         {
-            var pagedGuild = await GuildApis.GetGuildRankingsAsync(Server.GetDescription(), page, IsThisWeek);
+            var pagedGuild = await GuildApis.GetGuildRankingsAsync(Server.GetDescription(), page, SelectedDate.PivotDate);
             if (pagedGuild.Count == 0)
                 break;
 
