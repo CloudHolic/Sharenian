@@ -30,23 +30,23 @@ public class GuildInfo(int order, string name, int level, string master, long sc
     {
         var percentage = (double)Order / totalGuilds * 100;
 
-        Point = (Order, percentage) switch
+        Point = (Order, Score, percentage) switch
         {  
-            (1, _) => 40,
-            (2, _) => 38,
-            (3, _) => 36,
-            (4 or 5, _) => 34,
-            (>= 6 and <= 10, _) => 32,
-            (>= 11, < 6) => 29,
-            (_, >= 6 and < 11) => 27,
-            (_, >= 11 and < 16) => 25,
-            (_, >= 16 and < 21) => 23,
-            (_, >= 21 and < 26) => 21,
-            (_, >= 26 and < 31) => 19,
-            (_, >= 31 and < 41) => 17,
-            (_, >= 41 and < 61) => 15,
-            (_, >= 61 and < 81) => 13,
-            _ when Score >= 500 => 10,
+            (1, _, _) => 40,
+            (2, _, _) => 38,
+            (3, _, _) => 36,
+            (4 or 5, _, _) => 34,
+            (>= 6 and <= 10, _, _) => 32,
+            (>= 11, _, < 6) => 29,
+            (_, _, >= 6 and < 11) => 27,
+            var (_, s, p) when s >= 60_000 || p is >= 11 and < 16 => 25,
+            var (_, s, p) when s >= 40_000 || p is >= 16 and < 21 => 23,
+            var (_, s, p) when s >= 20_000 || p is >= 21 and < 26 => 21,
+            var (_, s, p) when s >= 10_000 || p is >= 26 and < 31 => 19,
+            var (_, s, p) when s >= 5_000 || p is >= 31 and < 41 => 17,
+            var (_, s, p) when s >= 3_000 || p is >= 41 and < 61 => 15,
+            var (_, s, p) when s >= 1_500 || p is >= 61 and < 81 => 13,
+            (_, >= 500, _) => 10,
             _ => 0
         };
     }
