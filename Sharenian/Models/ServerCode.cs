@@ -40,18 +40,21 @@ public enum ServerCode
     [Description("노바")]
     Nova,
 
-    [Description("리부트")]
-    Reboot,
+    [Description("에오스")]
+    Eos,
 
-    [Description("리부트2")]
-    Reboot2,
+    [Description("헬리오스")]
+    Helios,
 
-    [Description("버닝")]
-    Burning,
+    [Description("챌린저스")]
+    Challengers,
 
-    [Description("버닝2")]
-    Burning2,
+    [Description("챌린저스2")]
+    Challengers2,
     
-    [Description("버닝3")]
-    Burning3
+    [Description("챌린저스3")]
+    Challengers3,
+    
+    [Description("챌린저스4")]
+    Challengers4
 }
